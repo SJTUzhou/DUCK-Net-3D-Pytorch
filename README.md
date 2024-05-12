@@ -6,6 +6,11 @@ Official Repo: [https://github.com/RazvanDu/DUCK-Net](https://github.com/RazvanD
 Paper: [here](https://www.nature.com/articles/s41598-023-36940-5)
 
 
+## Requirement:
+
+Pytorch
+
+
 
 ## DUCK-Net for 2D image segmentation tasks: duck_net.py
 
