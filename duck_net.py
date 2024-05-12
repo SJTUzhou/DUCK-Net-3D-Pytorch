@@ -241,7 +241,7 @@ class DuckNet(nn.Module):
             x = self.encoder_duck_blocks[d](x)
             t.append(x)
             x = self.down_blocks[d](x)
-            x = x + p[d]
+            x = self.addition_multiplier * (x + p[d])
             
         # bottleneck
         x = self.bottleneck(x)
@@ -249,7 +249,7 @@ class DuckNet(nn.Module):
         # decoder
         for d in range(self.depth-1, -1, -1): # [depth-1, depth-2, ..., 0]
             x = self.up_blocks[d](x)
-            x = x + t[d]
+            x = self.addition_multiplier * (x + t[d])
             x = self.decoder_duck_blocks[d](x)
             
         x = self.out(x)
