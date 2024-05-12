@@ -12,10 +12,11 @@ Paper: [here](https://www.nature.com/articles/s41598-023-36940-5)
 ### official DuckNet model 
 
 ```
+from duck_net import DuckNet
 model = DuckNet(in_channels=3, 
                 out_channels=1, 
                 depth=5, 
-                init_features=17, 
+                init_features=17, # 34
                 normalization='batch', 
                 interpolation='nearest', 
                 out_activation='sigmoid', 
@@ -29,13 +30,14 @@ model.apply(init_weights_with_kaiming_uniform) # default init is xaiver uniform
 # @ use_multiplier=True: for numerical stability
 # @ normalization=None: reduce GPU memory usage
 # @ out_activation=None: faster convergence when using Dice loss
+from duck_net import DuckNet
 model = DuckNet(in_channels=3, 
                 out_channels=1, 
                 depth=5, 
                 init_features=16, 
-                normalization=None, 
-                interpolation='nearest', 
-                out_activation=None, 
+                normalization=None, # 'batch', 'instance'
+                interpolation='nearest', # 'bilinear', 'bicubic'
+                out_activation=None, # 'sigmoid', 'relu', 'softmax'
                 use_multiplier=True)
 ```
 
@@ -51,13 +53,14 @@ model = DuckNet(in_channels=3,
 # @ use_multiplier=True: for numerical stability
 # @ normalization=None: reduce GPU memory usage
 # @ out_activation=None: faster convergence when using Dice loss
+from duck_net_3d import DuckNet3D
 model = DuckNet3D(in_channels=1, 
                 out_channels=1, 
                 depth=4, 
                 init_features=16, 
-                normalization=None, 
-                interpolation='nearest', 
-                out_activation=None, 
+                normalization=None, # 'batch', 'instance'
+                interpolation='nearest', # 'trilinear'
+                out_activation=None, # 'sigmoid', 'relu', 'softmax'
                 use_multiplier=True)
 ```
 
