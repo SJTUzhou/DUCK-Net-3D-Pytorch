@@ -12,10 +12,8 @@ class Normalization(nn.Module):
             self.norm = nn.BatchNorm2d(num_features)
         elif normalization.lower() == 'instance':
             self.norm = nn.InstanceNorm2d(num_features)
-        elif normalization.lower() == 'layer':
-            self.norm = nn.LayerNorm(num_features)
         else:
-            raise ValueError("Invalid normalization type. Supported types are None, 'batch', 'instance', and 'layer'.")
+            raise ValueError("Invalid normalization type. Supported types are None, 'batch', and 'instance'.")
 
     def forward(self, x):
         return self.norm(x)
@@ -260,7 +258,7 @@ if __name__ == "__main__":
         '''Count the number of trainable parameters in the model.'''
         return sum(p.numel() for p in model.parameters() if p.requires_grad)
             
-    x = torch.randn(2,3,512,512) # (batch_size, in_channels, height, width)
+    x = torch.randn(2,3,256,256) # (batch_size, in_channels, height, width)
     
     # official DuckNet model 
     model = DuckNet(in_channels=3, out_channels=1, depth=5, init_features=17, normalization='batch', interpolation='nearest', out_activation='sigmoid', use_multiplier=False)
