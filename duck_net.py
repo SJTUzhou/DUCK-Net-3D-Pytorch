@@ -155,13 +155,25 @@ class DuckConv2dBlock(nn.Module):
 
 class DuckNet(nn.Module):
     def __init__(self, in_channels, out_channels, depth=5, init_features=32, normalization='batch', interpolation='nearest', out_activation='sigmoid', use_multiplier=False):
+        """DUCK-Net for 2D image segmentation.
+            reference paper: https://www.nature.com/articles/s41598-023-36940-5
+        Args:
+            in_channels (int): input channels of the image
+            out_channels (int): output channels of the image
+            depth (int): depth of the network. Defaults to 5.
+            init_features (int): base number of features. Defaults to 32.
+            normalization (str): normalization type ['batch','instance',None]. Defaults to 'batch'.
+            interpolation (str): interpolation type, see nn.Upsample(). Defaults to 'nearest'.
+            out_activation (str): output activation type ['sigmoid','softmax','relu',None]. Defaults to 'sigmoid'.
+            use_multiplier (bool): use multiplier for numerical stability. Defaults to False.
+        """
         super(DuckNet, self).__init__()
         
         duck_multiplier = 1.0 # multiplier for the duck block's addition operation
         residual_block_multiplier = 1.0 # multiplier for the residual block's addition operation
         self.addition_multiplier = 1.0 # multiplier in the encoder-decoder skip connection
         
-        if use_multiplier:
+        if use_multiplier: # use multiplier for numerical stability
             duck_multiplier = 1 / 6.0 
             residual_block_multiplier = 0.5
             self.addition_multiplier = 0.5
